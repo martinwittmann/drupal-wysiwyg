@@ -200,6 +200,8 @@ EOL;
  */
 function wysiwyg_ckeditor_settings($editor, $config, $theme) {
   $settings = array(
+    // Needed to make relative paths work in the editor.
+    'baseHref' => $GLOBALS['base_url'] . '/',
     'width' => 'auto',
     // For better compatibility with smaller textareas.
     'resize_minWidth' => 450,
