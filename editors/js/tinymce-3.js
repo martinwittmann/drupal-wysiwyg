@@ -12,15 +12,15 @@
  */
 Drupal.wysiwyg.editor.init.tinymce = function(settings) {
   // Fix Drupal toolbar obscuring editor toolbar in fullscreen mode.
-  var $drupalToolbar = $('#toolbar', Drupal.overlayChild ? window.parent.document : document);
+  var $drupalToolbars = $('#toolbar, #admin-menu', Drupal.overlayChild ? window.parent.document : document);
   tinyMCE.onAddEditor.add(function (mgr, ed) {
     if (ed.id == 'mce_fullscreen') {
-      $drupalToolbar.hide();
+      $drupalToolbars.hide();
     }
   });
   tinyMCE.onRemoveEditor.add(function (mgr, ed) {
     if (ed.id == 'mce_fullscreen') {
-      $drupalToolbar.show();
+      $drupalToolbars.show();
     }
   });
 
