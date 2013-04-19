@@ -507,6 +507,8 @@ function wysiwyg_profile_overview($form, &$form_state) {
     }
     else {
       $form['formats'][$id]['editor'] = array(
+        '#title' => t('Select an editor'),
+        '#title_display' => 'invisible',
         '#type' => 'select',
         '#default_value' => '',
         '#options' => $options,
