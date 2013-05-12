@@ -11,8 +11,8 @@
 function wysiwyg_epiceditor_editor() {
   $editor['epiceditor'] = array(
     'title' => 'EpicEditor',
-    'vendor url' => 'http://oscargodson.github.com/EpicEditor',
-    'download url' => 'http://oscargodson.github.com/EpicEditor',
+    'vendor url' => 'http://epiceditor.com',
+    'download url' => 'http://epiceditor.com',
     'libraries' => array(
       '' => array(
         'title' => 'Minified',
