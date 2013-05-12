@@ -12,7 +12,7 @@ function wysiwyg_epiceditor_editor() {
   $editor['epiceditor'] = array(
     'title' => 'EpicEditor',
     'vendor url' => 'http://oscargodson.github.com/EpicEditor',
-    'download url' => 'http://oscargodson.github.com/EpicEditor/docs/downloads/EpicEditor-v0.1.1.zip',
+    'download url' => 'http://oscargodson.github.com/EpicEditor',
     'libraries' => array(
       '' => array(
         'title' => 'Minified',
