@@ -581,6 +581,9 @@ function wysiwyg_profile_overview_submit($form, &$form_state) {
       ->execute();
   }
   wysiwyg_profile_cache_clear();
+  if (module_exists('admin_menu')) {
+    admin_menu_flush_caches();
+  }
 }
 
 /**
@@ -607,6 +610,9 @@ function wysiwyg_profile_delete_confirm_submit($form, &$form_state) {
   $format = $form_state['values']['format'];
   wysiwyg_profile_delete($format->format);
   wysiwyg_profile_cache_clear();
+  if (module_exists('admin_menu')) {
+    admin_menu_flush_caches();
+  }
 
   drupal_set_message(t('Wysiwyg profile for %name has been deleted.', array('%name' => $format->name)));
   $form_state['redirect'] = 'admin/config/content/wysiwyg';

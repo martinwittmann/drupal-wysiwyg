@@ -108,6 +108,30 @@ function wysiwyg_admin_profile_title($profile) {
 }
 
 /**
+ * Implements hook_admin_menu_map().
+ */
+function wysiwyg_admin_menu_map() {
+  if (!user_access('administer filters')) {
+    return;
+  }
+
+  $profiles = wysiwyg_profile_load_all();
+  foreach ($profiles as $key => $profile) {
+    if (empty($profile->editor)) {
+      unset($profiles[$key]);
+    }
+  }
+  $map['admin/config/content/wysiwyg/profile/%wysiwyg_profile'] = array(
+    'parent' => 'admin/config/content/wysiwyg',
+    'hide' => 'admin/config/content/wysiwyg/list',
+    'arguments' => array(
+      array('%wysiwyg_profile' => array_keys($profiles)),
+    ),
+  );
+  return $map;
+}
+
+/**
  * Implements hook_element_info().
  */
 function wysiwyg_element_info() {
