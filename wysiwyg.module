@@ -54,19 +54,22 @@ function wysiwyg_menu() {
     'access arguments' => array('administer filters'),
     'file' => 'wysiwyg.admin.inc',
   );
-  $items['admin/config/content/wysiwyg/profile'] = array(
+  $items['admin/config/content/wysiwyg/list'] = array(
     'title' => 'List',
     'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => -10,
   );
-  $items['admin/config/content/wysiwyg/profile/%wysiwyg_profile/edit'] = array(
-    'title' => 'Edit',
+  $items['admin/config/content/wysiwyg/profile/%wysiwyg_profile'] = array(
+    'title callback' => 'wysiwyg_admin_profile_title',
+    'title arguments' => array(5),
     'page callback' => 'drupal_get_form',
     'page arguments' => array('wysiwyg_profile_form', 5),
     'access arguments' => array('administer filters'),
     'file' => 'wysiwyg.admin.inc',
-    'tab_root' => 'admin/config/content/wysiwyg/profile',
-    'tab_parent' => 'admin/config/content/wysiwyg/profile/%wysiwyg_profile',
-    'type' => MENU_LOCAL_TASK,
+  );
+  $items['admin/config/content/wysiwyg/profile/%wysiwyg_profile/edit'] = array(
+    'title' => 'Edit',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
   );
   $items['admin/config/content/wysiwyg/profile/%wysiwyg_profile/delete'] = array(
     'title' => 'Remove',
@@ -74,8 +77,6 @@ function wysiwyg_menu() {
     'page arguments' => array('wysiwyg_profile_delete_confirm', 5),
     'access arguments' => array('administer filters'),
     'file' => 'wysiwyg.admin.inc',
-    'tab_root' => 'admin/config/content/wysiwyg/profile',
-    'tab_parent' => 'admin/config/content/wysiwyg/profile/%wysiwyg_profile',
     'type' => MENU_LOCAL_TASK,
     'weight' => 10,
   );
@@ -89,6 +90,21 @@ function wysiwyg_menu() {
     'file' => 'wysiwyg.dialog.inc',
   );
   return $items;
+}
+
+/**
+ * Display an editor profile title.
+ *
+ * @param $profile
+ *   An editor profile object.
+ *
+ * @return
+ *   The unfiltered name of an editor profile.
+ *   Currently the same as the text format name.
+ */
+function wysiwyg_admin_profile_title($profile) {
+  $format = filter_format_load($profile->format);
+  return $format->name;
 }
 
 /**
