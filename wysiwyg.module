@@ -115,9 +115,10 @@ function wysiwyg_admin_menu_map() {
     return;
   }
 
+  $formats = filter_formats();
   $profiles = wysiwyg_profile_load_all();
   foreach ($profiles as $key => $profile) {
-    if (empty($profile->editor)) {
+    if (empty($profile->editor) || !isset($formats[$profile->format])) {
       unset($profiles[$key]);
     }
   }
