@@ -6,8 +6,13 @@
 Drupal.wysiwyg.editor.attach.epiceditor = function (context, params, settings) {
   var $target = $('#' + params.field),
     containerId = params.field + '-epiceditor',
-    defaultContent = $target.val();
-  $target.hide().after('<div id="' + containerId + '" />');
+    defaultContent = $target.val(),
+    $container = $('<div id="' + containerId + '" />');
+  $target.hide().after($container);
+  if (!settings.height) {
+    settings.height = $('#' + params.field).height();
+  }
+  $container.height(settings.height);
 
   settings.container = containerId;
   settings.file = {
