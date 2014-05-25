@@ -180,16 +180,6 @@ function wysiwyg_help($path, $arg) {
 }
 
 /**
- * Implementation of hook_form_alter().
- */
-function wysiwyg_form_alter(&$form, &$form_state) {
-  // Teaser splitter is unconditionally removed and NOT supported.
-  if (isset($form['body_field'])) {
-    unset($form['body_field']['teaser_js']);
-  }
-}
-
-/**
  * Implements hook_element_info_alter().
  */
 function wysiwyg_element_info_alter(&$types) {
@@ -216,9 +206,6 @@ function wysiwyg_pre_render_text_format($element) {
 
   $format_field = &$element['format'];
   $field = &$element['value'];
-  $settings = array(
-    'field' => $field['#id'],
-  );
 
   // If this textarea is #resizable and we will load at least one
   // editor, then only load the behavior and let the 'none' editor
@@ -231,6 +218,14 @@ function wysiwyg_pre_render_text_format($element) {
     $resizable = 1;
     drupal_add_js('misc/textarea.js');
   }
+  $settings = array(
+    'field' => $field['#id'],
+    'resizable' => $resizable,
+  );
+  if (isset($element['summary']) && $element['summary']['#type'] == 'textarea') {
+    $settings['summary'] = $element['summary']['#id'];
+  }
+
   // Determine the available text formats.
   foreach ($format_field['format']['#options'] as $format_id => $format_name) {
     $format = 'format' . $format_id;
@@ -239,7 +234,6 @@ function wysiwyg_pre_render_text_format($element) {
       'editor' => 'none',
       'status' => 1,
       'toggle' => 1,
-      'resizable' => $resizable,
     );
 
     // Fetch the profile associated to this text format.
@@ -302,6 +296,9 @@ function wysiwyg_pre_render_text_format($element) {
   // handle resizable textareas instead of core.
   if (isset($loaded) && $resizable) {
     $field['#resizable'] = FALSE;
+    if (isset($element['summary'])) {
+      $element['summary']['#resizable'] = FALSE;
+    }
   }
 
   return $element;
