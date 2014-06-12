@@ -376,7 +376,10 @@ Drupal.wysiwygAttachToggleLink = function(context, fieldId) {
       div = document.createElement('div');
     $(a).attr({ id: 'wysiwyg-toggle-' + fieldId, href: 'javascript:void(0);' }).append(text);
     $(div).addClass('wysiwyg-toggle-wrapper').append(a);
-    $('#' + fieldInfo.trigger).closest('.fieldset-wrapper').prepend(div);
+    if ($('#' + fieldInfo.trigger).closest('.fieldset-wrapper').prepend(div).length == 0) {
+      // Fall back to inserting the link right after the field.
+      $('#' + fieldId).after(div);
+    };
   }
   $('#wysiwyg-toggle-' + fieldId, context)
     .html(fieldInfo.enabled ? Drupal.settings.wysiwyg.disable : Drupal.settings.wysiwyg.enable).show()
