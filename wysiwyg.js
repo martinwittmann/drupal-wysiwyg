@@ -112,11 +112,12 @@ Drupal.behaviors.attachWysiwyg = {
       var fieldInfo = getFieldInfo(trigger.field, {
           activeFormat: 'format' + this.value,
           formats: {},
-          trigger: this.id,
-          summary: trigger.summary,
           enabled: null,
           resizable: trigger.resizable
       });
+      // Always update these since Drupal generates new ids on AJAX calls.
+      fieldInfo.trigger = this.id;
+      fieldInfo.summary = trigger.summary;
       for (var format in trigger) {
         if (format.indexOf('format') != 0) {
           continue;
@@ -403,6 +404,7 @@ Drupal.wysiwyg.toggleWysiwyg = function (event) {
   Drupal.wysiwygDetach(context, fieldId);
   // Toggling the enabled state indirectly toggles use of the 'none' editor.
   fieldInfo.enabled = !fieldInfo.enabled;
+  fieldInfo.formats[fieldInfo.activeFormat].enabled = fieldInfo.enabled;
   // Attach based on new parameters.
   Drupal.wysiwygAttach(context, fieldId);
   $(this).html(fieldInfo.enabled ? Drupal.settings.wysiwyg.disable : Drupal.settings.wysiwyg.enable).blur();
