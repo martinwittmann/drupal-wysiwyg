@@ -126,6 +126,9 @@ Drupal.behaviors.attachWysiwyg = {
           fieldInfo.formats[format] = {
             'enabled': trigger[format].status
           }
+          if (trigger[format].skip_summary) {
+            fieldInfo.formats[format].skip_summary = true;
+          }
         }
         // Build the cache of format/profile settings.
         if (!formatInfo[format]) {
@@ -233,7 +236,7 @@ Drupal.wysiwygAttach = function(context, fieldId) {
     // Attach to main field.
     attachToField(context, {'status': fieldInfo.enabled, 'editor': editor, 'field': fieldId, 'format': fieldInfo.activeFormat, 'resizable': fieldInfo.resizable}, editorSettings);
     // Attach to summary field.
-    if (fieldInfo.summary) {
+    if (fieldInfo.summary && (!fieldInfo.formats[fieldInfo.activeFormat] || !fieldInfo.formats[fieldInfo.activeFormat].skip_summary)) {
       // If the summary wrapper is hidden, attach when it's made visible.
       if ($('#' + fieldInfo.summary).parents('.text-summary-wrapper').is(':visible')) {
         attachToField(context, {'status': fieldInfo.enabled, 'editor': editor, 'field': fieldInfo.summary, 'format': fieldInfo.activeFormat, 'resizable': fieldInfo.resizable}, editorSettings);

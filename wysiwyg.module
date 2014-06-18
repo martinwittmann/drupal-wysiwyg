@@ -240,6 +240,9 @@ function wysiwyg_pre_render_text_format($element) {
     $profile = wysiwyg_get_profile($format_id);
     if ($profile) {
       $loaded = TRUE;
+      if (isset($profile->settings['add_to_summaries']) && !$profile->settings['add_to_summaries']) {
+        $settings[$format]['skip_summary'] = 1;
+      }
       $settings[$format]['editor'] = $profile->editor;
       $settings[$format]['status'] = (int) wysiwyg_user_get_status($profile);
       if (isset($profile->settings['show_toggle'])) {
