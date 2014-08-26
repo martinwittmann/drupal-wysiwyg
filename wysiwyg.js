@@ -87,7 +87,7 @@ function getFormatInfo(formatId, defaultData) {
     }
     else {
       return {
-        editor: 'none',
+        editor: 'none'
       };
     }
   }
