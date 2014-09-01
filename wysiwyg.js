@@ -138,10 +138,10 @@ Drupal.behaviors.attachWysiwyg = {
     }
 
     $('.wysiwyg:input', context).once('wysiwyg', function () {
-      var $this = $('#' + this.id, context), trigger = settings.wysiwyg.triggers[this.id];
       // Skip processing if the trigger is unknown or does not exist in this
       // document. Can happen after a form was removed but Drupal.ajax keeps a
       // lingering reference to the form and calls Drupal.attachBehaviors().
+      var $this = $('#' + this.id, document), trigger = settings.wysiwyg.triggers[this.id];
       if (!trigger || !$this.length) {
         return;
       }
