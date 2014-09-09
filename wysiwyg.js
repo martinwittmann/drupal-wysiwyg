@@ -2,10 +2,10 @@
 
 // Keeps track of editor status during AJAX operations, active format and more.
 // Always use getFieldInfo() to get a valid reference to the correct data.
-var _fieldInfoStorage = {};
+var _fieldInfoStorage = Drupal.wysiwyg._fieldInfoStorage = (Drupal.wysiwyg._fieldInfoStorage || {});
 // Keeps track of information relevant to each format, such as editor settings.
 // Always use getFormatInfo() to get a reference to a format's data.
-var _formatInfoStorage = {};
+var _formatInfoStorage = _formatInfoStorage = (Drupal.wysiwyg._formatInfoStorage || {});
 
 /**
  * Returns field specific editor data.
@@ -467,7 +467,7 @@ Drupal.wysiwygAttachToggleLink = function(context, fieldId) {
   }
   $('#wysiwyg-toggle-' + fieldId, context)
     .html(fieldInfo.enabled ? Drupal.settings.wysiwyg.disable : Drupal.settings.wysiwyg.enable).show()
-    .unbind('click.wysiwyg', Drupal.wysiwyg.toggleWysiwyg)
+    .unbind('click.wysiwyg')
     .bind('click.wysiwyg', { 'fieldId': fieldId, 'context': context }, Drupal.wysiwyg.toggleWysiwyg);
 
   // Hide toggle link in case no editor is attached.
@@ -600,7 +600,7 @@ function callbackWrapper(name, context) {
 Drupal.wysiwygInit();
 
 // Respond to CTools detach behaviors event.
-$(document).bind('CToolsDetachBehaviors', function(event, context) {
+$(document).unbind('CToolsDetachBehaviors.wysiwyg').bind('CToolsDetachBehaviors.wysiwyg', function(event, context) {
   Drupal.behaviors.attachWysiwyg.detach(context, {}, 'unload');
 });
 
