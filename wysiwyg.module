@@ -400,6 +400,11 @@ function wysiwyg_load_editor($profile) {
     }
   }
 
+  // Check if settings were already added on the page that makes an AJAX call.
+  if (isset($_POST['ajax_page_state']) && !empty($_POST['ajax_page_state']['js'][$path . '/wysiwyg.js'])) {
+    $settings_added = TRUE;
+  }
+
   // Add basic Wysiwyg settings if any editor has been added.
   if (!isset($settings_added) && $loaded[$name]) {
     drupal_add_js(array('wysiwyg' => array(
